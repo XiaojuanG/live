@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <title>mobile live</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <!-- 阿里云播放器css -->
+    <link rel="stylesheet" href="//g.alicdn.com/de/prismplayer/2.5.0/skins/default/aliplayer-min.css" />
+    <!-- layim移动端 -->
+    <link rel="stylesheet" type="text/css" href="layim/css/layui.mobile.css">
+    <style type="text/css">
+      body .layim-title{display: none;}
+      body .layim-chat-main, body .layui-layim{top: 0}
+      body .layim-panel{position: fixed;top: 240px;}
+      body .layim-panel .layim-content{top: 240px;}
+      body .layim-chat-main{top: 240px;bottom: 50px; background: #fff;}
+      body .layim-chat-main ul li{margin-bottom: 0;}
+      body .layim-chat-main ul .layim-chat-system{margin: 5px 0 1px;}
+      body .layim-chat-footer{height: 40px;justify-content: space-between;}
+      body .layim-chat-send{display: inline;float: right;width: 80%;}
+      body .layim-chat-send input{height: 30px;width: 65%;}
+      body .layim-chat-send button{height: 30px;margin-left: 30px;}
+      body .layim-chat-text, .layim-chat-user{font-size: 8px;}
+      body .layim-chat-text{margin-top: 20px;padding: 0px 15px;}
+      body .layim-chat-user img{width: 20px;height: 20px;}
+      body .layim-chat-user cite{font-size: 8px;}
+      body .layim-chat-text:after{display:none;}
+      body .layim-chat-tool{display: inline;}
+      body .layim-layer{bottom: 60px;}
+      body .layim-chat-send button{padding: 0 10px;}
+      .prism-big-play-btn{
+        position: absolute;
+        left: 50%  !important;
+        bottom:50%  !important;
+        margin-left: -31.5px;
+        margin-bottom: -31.5px;
+        display: block;
+      }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body> 
+    <div  class="prism-player" id="J_prismPlayer" style="width:100%;overflow:hidden;height:240px;">
+    </div>
+    <!-- <div id="notice" class="notice" style="display:none;">
+        <div id="notice-title" class="notice-title">
+            <ul>
+                <li class="select"><a href="#">聊天互动</a></li>
+                <li class=""><a href="#">聊天</a></li>
+                <li class=""><a href="#">互动</a></li>
+                <li class=""><a href="#">应用</a></li>
+            </ul>
+        </div>
+        <div id="notice-content" class="notice-content">
+            <div class="model" style="display:block;">
+                
+            </div>
+            <div class="model" style="display:none;">
+                <ul>
+                    <li><a href="">聊天</a></li>
+                    <li><a href="">聊天</a></li>
+                </ul>
+            </div>
+            <div class="model" style="display:none;">
+                <ul>
+                    <li><a href="">互动</a></li>
+                    <li><a href="">互动</a></li>
+                </ul>
+            </div>
+            <div class="model" style="display:none;">
+                <ul>
+                    <li><a href="">聊天互动</a></li>
+                    <li><a href="">聊天互动</a></li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <!-- <script type="text/javascript" src="js/tabscript.js"></script> -->
+    <!-- 阿里云播放器js -->
+    <script type="text/javascript" src="//g.alicdn.com/de/prismplayer/2.5.0/aliplayer-min.js"></script>
+    <script>
+        var player = new Aliplayer({
+        id: 'J_prismPlayer',
+        cover: "images/video.jpg",  //播放器封面图
+        width: '100%',
+        autoplay: false,
+        //支持播放地址播放,此播放优先级最高
+        source : 'http://cloud.video.taobao.com/play/u/2554695624/p/1/e/6/t/1/fv/102/28552077.mp4',
+        // //播放方式二：点播用户推荐
+        // vid : '1e067a2831b641db90d570b6480fbc40',
+        // playauth : '',
+        // cover: 'http://liveroom-img.oss-cn-qingdao.aliyuncs.com/logo.png',            
+        // //播放方式三：仅MPS用户使用
+        // vid : '1e067a2831b641db90d570b6480fbc40',
+        // accId: '',
+        // accSecret: '',
+        // stsToken: '',
+        // domainRegion: '',
+        // authInfo: '',
+        // //播放方式四：使用STS方式播放
+        // vid : '1e067a2831b641db90d570b6480fbc40',
+        // accessKeyId: '',
+        // securityToken: '',
+        // accessKeySecret: ''
+        },function(player){
+            console.log('播放器创建好了。')
+       });
+    </script>
+    <!-- layim移动版 -->
+    <script type="text/javascript" src="layim/layui.js"></script>
+    <script type="text/javascript">
+        layui.config({
+          version: true
+        }).use('mobile', function(){
+          var mobile = layui.mobile
+          ,layim = mobile.layim
+          ,layer = mobile.layer;
+          
+          //演示自动回复
+          var autoReplay = [
+            '您好，我现在有事不在，一会再和您联系。', 
+            '你没发错吧？face[微笑] ',
+            '洗澡中，请勿打扰，偷窥请购票，个体四十，团体八折，订票电话：一般人我不告诉他！face[哈哈] ',
+            '你好，我是主人的美女秘书，有什么事就跟我说吧，等他回来我会转告他的。face[心] face[心] face[心] ',
+            'face[威武] face[威武] face[威武] face[威武] ',
+            '<（@￣︶￣@）>',
+            '你要和我说话？你真的要和我说话？你确定自己想说吗？你一定非说不可吗？那你说吧，这是自动回复。',
+            'face[黑线]  你慢慢说，别急……',
+            '(*^__^*) face[嘻嘻] ，是贤心吗？'
+          ];
+          
+          layim.config({
+            
+            
+           init: {
+              //我的信息
+              mine: {
+                "username": "纸飞机" //我的昵称
+                ,"id": 123 //我的ID
+                ,"avatar": "http://tvax1.sinaimg.cn/crop.0.0.300.300.180/006Iv8Wjly8ff7ghbigcij308c08ct8i.jpg" //我的头像
+                ,"sign": "懒得签名"
+              }
+              ,
+            }
+
+          });
+          
+          //创建一个会话
+          
+          layim.chat({
+            id: 111111
+            ,name: '许闲心'
+            ,type: 'group' //friend、group等字符，如果是group，则创建的是群聊
+            ,avatar: 'http://tp1.sinaimg.cn/1571889140/180/40030060651/1'
+          });
+          
+          
+          
+          //查看聊天信息
+          layim.on('detail', function(data){
+            //console.log(data); //获取当前会话对象
+            layim.panel({
+              title: data.name + ' 聊天信息' //标题
+              ,tpl: '<div style="padding: 10px;">自定义模版，<a href="http://www.layui.com/doc/modules/layim_mobile.html#ondetail" target="_blank">参考文档</a></div>' //模版
+              ,data: { //数据
+                test: '么么哒'
+              }
+            });
+          });
+          
+          
+
+          
+         
+          //监听发送消息
+          layim.on('sendMessage', function(data){
+            var To = data.to;
+            //console.log(data);
+
+            //演示自动回复
+            setTimeout(function(){
+              var obj = {};
+              if(To.type === 'group'){
+                obj = {
+                  username: '模拟群员'+(Math.random()*100|0)
+                  ,avatar: layui.cache.dir + 'images/face/'+ (Math.random()*72|0) + '.gif'
+                  ,id: To.id
+                  ,type: 'group'
+                  ,content: autoReplay[Math.random()*9|0]
+                }
+              } else {
+                obj = {
+                  username: To.name
+                  ,avatar: To.avatar
+                  ,id: To.id
+                  ,type: To.type
+                  ,content: autoReplay[Math.random()*9|0]
+                }
+              }
+              layim.getMessage(obj);
+            }, 3000);
+          });
+          
+          //监听查看更多记录
+          layim.on('chatlog', function(data, ul){
+            console.log(data);
+            layim.panel({
+              title: '与 '+ data.name +' 的聊天记录' //标题
+              ,tpl: '<div style="padding: 10px;">这里是模版，{{d.data.test}}</div>' //模版
+              ,data: { //数据
+                test: 'Hello'
+              }
+            });
+          });
+          
+          //模拟"更多"有新动态
+          layim.showNew('More', true);
+          layim.showNew('find', true);
+        });
+    </script>
+    <!-- <script type="text/javascript">
+    var top = document.activeElement.getBoundingClientRect().top;
+    console.log(top);
+      alert(123);
+      var ua = navigator.userAgent;
+      var isAndroid = /android/i.test(ua); //android终端
+      alert(isAndroid);
+      if(isAndroid) {
+          
+          window.onresize = function () {
+            alert(22222222);
+              // if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
+              //     setTimeout(function () {
+              //         var top = document.activeElement.getBoundingClientRect().top;
+              //         window.scrollTo(10,top);
+              //     }, 0);
+              // }
+          }
+      }else{
+        // alert(987654321);
+      }
+    </script> -->
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+  </body>
+</html>
